@@ -1,0 +1,25 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "declaration": true,
+
+    "strict": true,
+
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "removeComments": true,
+    "preserveConstEnums": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2015.reflect",
+      "es5",
+      "es2015.core",
+      "dom",
+      "es6"
+    ],
+    "outDir": "build/dist"
+  }
+}

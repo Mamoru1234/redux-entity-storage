@@ -1,0 +1,31 @@
+{
+  "name": "redux-entity-storage",
+  "version": "0.0.1",
+  "description": "Storage to manage backend entities",
+  "main": "main.js",
+  "scripts": {
+    "build": "tsc -p tsconfig.prod.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mamoru1234/redux-entity-storage.git"
+  },
+  "dspm": {
+    "plugins": ["jsProject"]
+  },
+  "keywords": [
+    "redux", "entity", "crud"
+  ],
+  "author": "alexei_gontar",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Mamoru1234/redux-entity-storage/issues"
+  },
+  "homepage": "https://github.com/Mamoru1234/redux-entity-storage#readme",
+  "dependencies": {
+    "@types/lodash": "4.14.121",
+    "typescript": "^2.7.2",
+    "lodash": "^4.17.2"
+  }
+}
