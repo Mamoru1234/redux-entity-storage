@@ -1,6 +1,6 @@
 {
   "name": "redux-entity-storage",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Storage to manage backend entities",
   "main": "main.js",
   "scripts": {
@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/Mamoru1234/redux-entity-storage#readme",
   "dependencies": {
+    "reselect": "^2.5.4",
     "@types/lodash": "4.14.121",
     "typescript": "^2.7.2",
     "lodash": "^4.17.2"
