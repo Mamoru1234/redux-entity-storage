@@ -9,7 +9,8 @@ import {
   RemoveResultPayload,
   UpdateEntityPayload,
 } from './EntityStorageInterfaces';
-import { createAction } from './utils/ReduxHelper';
+// @ts-ignore
+import { createAction, Action } from './utils/ReduxHelper';
 import {
   addPendingRequest,
   checkEntityStorageCacheValid, DEFAULT_CACHE_DURATION,

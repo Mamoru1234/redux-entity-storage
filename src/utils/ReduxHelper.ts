@@ -44,7 +44,7 @@ export const handleActions = <S>(reducerMap: TypedObject<(state: S, action: any)
   return (state: S = initState, action: any) => {
     const reducer = reducerMap[action.type];
     if (!reducer) {
-      return;
+      return state;
     }
     return reducer(state, action);
   };

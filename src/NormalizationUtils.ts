@@ -3,7 +3,7 @@ import isArray from 'lodash/isArray';
 import get from 'lodash/get';
 import has from 'lodash/has';
 
-import { EntityStorageState, FetchEntityResult, NormalizeResult } from './EntityStorageInterfaces';
+import {FetchEntityResult, NormalizeResult, TypedObject} from './EntityStorageInterfaces';
 
 export interface NormalizeResponse<T> {
   models: string[];
@@ -51,7 +51,7 @@ export function normalizeListFactory<T>(entityName: string, idField: keyof T, ma
 }
 
 export function denormalizeListFactory<T>(entityName: string) {
-  return (entities: EntityStorageState['entities'], result: FetchEntityResult): T[] => {
+  return (entities: TypedObject<TypedObject<any>>, result: FetchEntityResult): T[] => {
     const items = entities[entityName];
     if (typeof result === 'string') {
       throw new Error(`result should be string for list`);
@@ -64,15 +64,16 @@ export function denormalizeListFactory<T>(entityName: string) {
 }
 
 export function denormalizeEntityFactory<T>(entityName: string) {
-  return (entities: EntityStorageState['entities'], result: FetchEntityResult): T => {
+  return (entities: TypedObject<TypedObject<any>>, result: FetchEntityResult): T => {
     const items = entities[entityName];
     if (isArray(result)) {
       throw new Error(`result should be string for object`);
     }
-    if (!items[result]) {
+    const resultKey = result as string;
+    if (!items[resultKey]) {
       throw new Error(`entity with result: ${result} not exist`);
     }
-    return items[result];
+    return items[resultKey];
   };
 }
 
