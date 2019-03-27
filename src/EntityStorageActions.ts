@@ -53,7 +53,7 @@ export function fetchEntityFactory<R>(adapter: EntityStorageAdapter<R>) {
       return addPendingRequest(storageKey, adapter.executeRequest(options.request, dispatch))
         .then((value: T) => {
           dispatch(fetchSuccess({
-            result: options.normalize(value),
+            result: options.normalize(options.responseMapper ? options.responseMapper(value) : value),
             storageKey,
             ttl: generateCacheTTL(get(options, 'ttl', DEFAULT_CACHE_DURATION) as number)
           }));

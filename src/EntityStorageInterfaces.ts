@@ -35,6 +35,8 @@ export interface NormalizeResult {
   entities: TypedObject<TypedObject<any>>;
 }
 
+export type ResponseMapper<T> = (response: any) => T
+
 export interface FetchOptions<R, T> {
   denormalize: DenormalizeFunction<T>;
   request: R;
@@ -42,6 +44,7 @@ export interface FetchOptions<R, T> {
   resetEntity?: boolean;
   ttl?: number;
   shouldIgnoreTtl?: boolean;
+  responseMapper?: ResponseMapper<T>;
 }
 
 export interface FetchFailurePayload {
