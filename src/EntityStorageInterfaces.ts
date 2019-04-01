@@ -73,6 +73,20 @@ export interface RemoveResultPayload {
   storageKey: string;
 }
 
+export interface CreateEntityPayload<R, T> {
+  value: T;
+  affectedResults: R[];
+  entityName: string;
+  entityId: string;
+}
+
+export interface InternalCreateEntityPayload {
+  value: any;
+  affectedResults: string[];
+  entityName: string;
+  entityId: string;
+}
+
 export interface EntityStorageAdapter<R> {
   getState: (state: any) => EntityStorageState;
   createStorageKey: (request: R) => string;

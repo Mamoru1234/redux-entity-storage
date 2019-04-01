@@ -5,14 +5,14 @@ import merge from 'lodash/merge';
 import has from 'lodash/has';
 import omit from 'lodash/omit';
 
-import { FETCH_SUCCESS, UPDATE_ENTITY, DELETE_ENTITY, REMOVE_RESULT } from './EntityStorageActions';
+import {FETCH_SUCCESS, UPDATE_ENTITY, DELETE_ENTITY, REMOVE_RESULT, CREATE_ENTITY} from './EntityStorageActions';
 
 import {
   DeleteEntityPayload,
   EntityStorageState,
-  FetchSuccessPayload,
+  FetchSuccessPayload, InternalCreateEntityPayload,
   RemoveResultPayload,
-  ResultItem,
+  ResultItem, TypedObject,
   UpdateEntityPayload,
 } from './EntityStorageInterfaces';
 import { Action, handleActions } from './utils/ReduxHelper';
@@ -22,7 +22,45 @@ const initState: EntityStorageState = {
   results: {},
 };
 
+function pushToResults(
+  results: TypedObject<ResultItem>, entityId: string, affectedResults: string[]): TypedObject<ResultItem> {
+  const newResults: TypedObject<ResultItem> = {};
+  forEach(results, (resultItem, key) => {
+    if (!affectedResults.includes(key)) {
+      newResults[key] = resultItem;
+      return;
+    }
+    const result = resultItem.result;
+    if (!isArray(result)) {
+      console.warn('Result affected is not array', key);
+      newResults[key] = resultItem;
+      return;
+    }
+    newResults[key] = {
+      ...resultItem,
+      result: result.concat(entityId),
+    };
+    return;
+  });
+  return newResults;
+}
+
 export default handleActions<EntityStorageState>({
+  [CREATE_ENTITY]: (state: EntityStorageState, { payload }: Action<InternalCreateEntityPayload>) => {
+    const { entityId, affectedResults, entityName, value} = payload;
+    const results = pushToResults(state.results, entityId, affectedResults);
+    const entities = {
+      ...state.entities,
+      [entityName]: {
+        ...state.entities[entityName],
+        [entityId]: value,
+      },
+    };
+    return {
+      entities,
+      results,
+    }
+  },
   [FETCH_SUCCESS]: (state: EntityStorageState, { payload }: Action<FetchSuccessPayload>) => {
     const { result, storageKey, ttl } = payload;
     const results: EntityStorageState['results'] = {

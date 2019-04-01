@@ -1,6 +1,6 @@
 {
   "name": "redux-entity-storage",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Storage to manage backend entities",
   "main": "main.js",
   "scripts": {
@@ -12,7 +12,7 @@
     "url": "git+https://github.com/Mamoru1234/redux-entity-storage.git"
   },
   "dspm": {
-    "plugins": ["jsProject"]
+    "plugins": ["jsProject", "npm"]
   },
   "keywords": [
     "redux", "entity", "crud"

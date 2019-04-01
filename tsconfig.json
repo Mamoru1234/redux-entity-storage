@@ -19,7 +19,8 @@
       "es5",
       "es2015.core",
       "dom",
-      "es6"
+      "es6",
+      "es2016"
     ],
     "outDir": "build/dist"
   }

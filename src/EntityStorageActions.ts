@@ -1,11 +1,12 @@
 import get from 'lodash/get';
 
 import {
+  CreateEntityPayload,
   DeleteEntityPayload,
   EntityStorageAdapter,
   FetchFailurePayload,
   FetchOptions,
-  FetchSuccessPayload,
+  FetchSuccessPayload, InternalCreateEntityPayload,
   RemoveResultPayload,
   UpdateEntityPayload,
 } from './EntityStorageInterfaces';
@@ -32,6 +33,23 @@ export const deleteEntity = createAction<DeleteEntityPayload>(DELETE_ENTITY);
 
 export const REMOVE_RESULT = Symbol('REMOVE_RESULT');
 export const removeResult = createAction<RemoveResultPayload>(REMOVE_RESULT);
+
+export const CREATE_ENTITY = Symbol('CREATE_ENTITY');
+export const createEntityAction = createAction<InternalCreateEntityPayload>(CREATE_ENTITY);
+
+export function actionsFactory<R>(adapter: EntityStorageAdapter<R>) {
+  function createEntity<T>(payload: CreateEntityPayload<R, T>) {
+    const actionPayload: InternalCreateEntityPayload = {
+      ...payload,
+      affectedResults: payload.affectedResults.map((request) => adapter.createStorageKey(request)),
+    };
+    return createEntityAction(actionPayload);
+  }
+  return {
+    createEntity,
+    fetchEntity: fetchEntityFactory(adapter),
+  };
+}
 
 export function fetchEntityFactory<R>(adapter: EntityStorageAdapter<R>) {
   return <T>(options: FetchOptions<R, T>): (...args: any[]) => Promise<T> => {
