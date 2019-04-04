@@ -53,6 +53,9 @@ export function normalizeListFactory<T>(entityName: string, idField: keyof T, ma
 export function denormalizeListFactory<T>(entityName: string) {
   return (entities: TypedObject<TypedObject<any>>, result: FetchEntityResult): T[] => {
     const items = entities[entityName];
+    if (!result) {
+      throw new Error(`Undef result`);
+    }
     if (typeof result === 'string') {
       throw new Error(`result should be string for list`);
     }
