@@ -28,7 +28,7 @@ export interface StorageState {
   entityStorage: EntityStorageState;
 }
 
-export type FetchEntityResult = string | string[];
+export type FetchEntityResult = string | string[] | null;
 
 export interface NormalizeResult {
   result: FetchEntityResult;
