@@ -5,14 +5,24 @@ import merge from 'lodash/merge';
 import has from 'lodash/has';
 import omit from 'lodash/omit';
 
-import {FETCH_SUCCESS, UPDATE_ENTITY, DELETE_ENTITY, REMOVE_RESULT, CREATE_ENTITY} from './EntityStorageActions';
+import {
+  CREATE_ENTITY,
+  DELETE_ENTITY,
+  FETCH_FAILURE,
+  FETCH_SUCCESS,
+  REMOVE_RESULT,
+  UPDATE_ENTITY,
+} from './EntityStorageActions';
 
 import {
   DeleteEntityPayload,
   EntityStorageState,
-  FetchSuccessPayload, InternalCreateEntityPayload,
+  FetchFailurePayload,
+  FetchSuccessPayload,
+  InternalCreateEntityPayload,
   RemoveResultPayload,
-  ResultItem, TypedObject,
+  ResultItem,
+  TypedObject,
   UpdateEntityPayload,
 } from './EntityStorageInterfaces';
 import { Action, handleActions } from './utils/ReduxHelper';
@@ -67,8 +77,8 @@ export default handleActions<EntityStorageState>({
       ...state.results,
       [storageKey]: {
         ttl,
-          error: null,
-          result: result.result,
+        error: null,
+        result: result.result,
       },
     };
     const entities: EntityStorageState['entities'] = {};
@@ -76,6 +86,21 @@ export default handleActions<EntityStorageState>({
     return {
       results,
       entities,
+    };
+  },
+  [FETCH_FAILURE]: (state: EntityStorageState, { payload }: Action<FetchFailurePayload>) => {
+    const { error, storageKey } = payload;
+    const results: EntityStorageState['results'] = {
+      ...state.results,
+      [storageKey]: {
+        error,
+        result: null,
+        ttl: 0,
+      },
+    };
+    return {
+      entities: state.entities,
+      results,
     };
   },
   [REMOVE_RESULT]: (state: EntityStorageState, { payload }: Action<RemoveResultPayload>) => {
