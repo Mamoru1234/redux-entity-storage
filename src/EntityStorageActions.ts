@@ -37,6 +37,9 @@ export const removeResult = createAction<RemoveResultPayload>(REMOVE_RESULT);
 export const CREATE_ENTITY = Symbol('CREATE_ENTITY');
 export const createEntityAction = createAction<InternalCreateEntityPayload>(CREATE_ENTITY);
 
+export const DELETE_FROM_RESULT = Symbol('DELETE_FROM_RESULT');
+export const deleteFromResult = createAction(DELETE_FROM_RESULT);
+
 export function actionsFactory<R>(adapter: EntityStorageAdapter<R>) {
   function createEntity<T>(payload: CreateEntityPayload<R, T>) {
     const actionPayload: InternalCreateEntityPayload = {
