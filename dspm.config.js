@@ -3,5 +3,11 @@ module.exports = (project) => {
     .dependsOn('clean');
 
   project.getTask('package')
-      .dependsOn('build');
+    .fromFile('package.json', {
+      version: process.env.TRAVIS_TAG || 'local',
+    })
+    .dependsOn('build');
+
+  project.getTask('publish')
+    .token(process.env.TRAVIS_NPM_TOKEN);
 };

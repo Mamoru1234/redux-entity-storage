@@ -1,6 +1,6 @@
 {
   "name": "redux-entity-storage",
-  "version": "0.0.9",
+  "version": "{{version}}",
   "description": "Storage to manage backend entities",
   "main": "main.js",
   "scripts": {
