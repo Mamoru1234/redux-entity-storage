@@ -2,5 +2,5 @@
 Storage to manage backend entities
 
 Requirements:
-    * redux
-    * redux-thunk
+* redux
+* redux-thunk
