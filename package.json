@@ -4,8 +4,7 @@
   "description": "Storage to manage backend entities",
   "main": "main.js",
   "scripts": {
-    "build": "tsc -p tsconfig.prod.json",
-    "test": "echo \"Error: no test specified\""
+    "build": "tsc -p tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
