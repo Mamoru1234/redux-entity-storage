@@ -92,3 +92,8 @@ export interface EntityStorageAdapter<R> {
   createStorageKey: (request: R) => string;
   executeRequest: (request: R, dispatch: any) => Promise<any>;
 }
+
+export interface RemoveFromResultPayload {
+  storageKey: string;
+  entityId: string;
+}

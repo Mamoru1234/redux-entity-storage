@@ -8,6 +8,7 @@ import omit from 'lodash/omit';
 import {
   CREATE_ENTITY,
   DELETE_ENTITY,
+  DELETE_FROM_RESULT,
   FETCH_FAILURE,
   FETCH_SUCCESS,
   REMOVE_RESULT,
@@ -19,7 +20,7 @@ import {
   EntityStorageState,
   FetchFailurePayload,
   FetchSuccessPayload,
-  InternalCreateEntityPayload,
+  InternalCreateEntityPayload, RemoveFromResultPayload,
   RemoveResultPayload,
   ResultItem,
   TypedObject,
@@ -158,6 +159,33 @@ export default handleActions<EntityStorageState>({
     });
     return {
       entities,
+      results,
+    };
+  },
+  [DELETE_FROM_RESULT]: (state: EntityStorageState, { payload }: Action<RemoveFromResultPayload>) => {
+    const { storageKey, entityId } = payload;
+    if (!has(state.results, storageKey)) {
+      return state;
+    }
+
+
+    const result = state.results[storageKey];
+    if (!isArray(result.result)) {
+      return state;
+    }
+
+    const filteredResult = result.result.filter((resultId) => resultId !== entityId);
+
+    const results: EntityStorageState['results'] = {
+      ...state.results,
+      [storageKey]: {
+        ...result,
+        result: filteredResult,
+      },
+    };
+
+    return {
+      ...state,
       results,
     };
   },
