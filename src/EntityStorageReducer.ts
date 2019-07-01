@@ -152,8 +152,10 @@ export default handleActions<EntityStorageState>({
         return;
       }
       if (isArray(value.result)) {
-        value.result = value.result.filter((resultId) => resultId !== entityId);
-        results[storeKey] = value;
+        results[storeKey] = {
+          ...value,
+          result: value.result.filter((resultId) => resultId !== entityId),
+        };
         return;
       }
     });
